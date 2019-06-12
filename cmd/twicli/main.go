@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/urfave/cli"
 	"os"
+
+	"github.com/johnta0/go-cli-tweet/twitter"
 )
 
 func main() {
@@ -13,11 +15,16 @@ func main() {
 	app.Usage = "cli app to tweet without browsing timeline. Browsing timeline is dangerous."
 	app.Version = "1.0"
 
-	// app.Action = func (context *cli.Context) error {
-	// 	return nil
-	// }
+	app.Action = twitter.Tweet
 
-	app.Action = printArg
+	app.Commands = []cli.Command {
+		{
+			Name: "tweet",
+			Aliases: []string{"t"},
+			Usage: "Post tweet",
+			Action: twitter.Tweet,
+		},
+	}
 
 	app.Run(os.Args)
 }
